@@ -1,6 +1,6 @@
 <?php
 
-require("../phpMQTT.php");
+require("phpMQTT.php");
 
 $server = "m11.cloudmqtt.com";     // change if necessary
 $port = 34434;                     // change if necessary
