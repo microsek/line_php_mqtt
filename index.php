@@ -1,7 +1,7 @@
 <?php
 
 require("phpMQTT.php");
-
+echo "after require\n";
 $server = "m11.cloudmqtt.com";     // change if necessary
 $port = 14434;                     // change if necessary
 $username = "test";                   // set your username
@@ -16,5 +16,5 @@ if ($mqtt->connect(true, NULL, $username, $password)) {
 } else {
     echo "Time out!\n";
 }
-echo "Finished publish";
+echo "Finished publish\n";
 ?>
