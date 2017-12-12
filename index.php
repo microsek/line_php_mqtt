@@ -16,5 +16,5 @@ if ($mqtt->connect(true, NULL, $username, $password)) {
 } else {
     echo "Time out!\n";
 }
-echo "Finished publish"
+echo "Finished publish";
 ?>
