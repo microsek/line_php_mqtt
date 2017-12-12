@@ -1,7 +1,7 @@
 <?php
 
 namespace Bluerhinos;
-
+echo "requ\n";
 /*
  	phpMQTT
 	A simple php class to connect/publish/subscribe to an MQTT broker
