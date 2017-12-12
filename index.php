@@ -15,8 +15,7 @@ if ($mqtt->connect(true,NULL,$username,$password)) {
   $mqtt->publish("topic",$message, 0);
   $mqtt->close();
 }else{
-  echo "Fail or time out
-";
+  echo "Fail or time out";
 }
 
 ?>
