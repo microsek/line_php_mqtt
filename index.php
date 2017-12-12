@@ -1,5 +1,5 @@
 <?php
-echo "MicrosekMQTT\n";
+
 require("phpMQTT.php");
 
 $server = "m11.cloudmqtt.com";     // change if necessary
@@ -16,4 +16,5 @@ if ($mqtt->connect(true, NULL, $username, $password)) {
 } else {
     echo "Time out!\n";
 }
+echo "Finished publish"
 ?>
