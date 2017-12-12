@@ -4,8 +4,8 @@ require("phpMQTT.php");
 $server = "m11.cloudmqtt.com";     // change if necessary
 $port = 34434;                     // change if necessary
 $username = "test";                   // set your username
-$password = 12345;                   // set your password
-$client_id = "phpMQTT-publisher"; // make sure this is unique for connecting to sever - you could use uniqid()
+$password = "12345";                   // set your password
+$client_id = ""; // make sure this is unique for connecting to sever - you could use uniqid()
 
 $mqtt = new bluerhinos\phpMQTT($host, $port, $client_id);
 
