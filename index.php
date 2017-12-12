@@ -13,6 +13,7 @@ $mqtt = new phpMQTT($server, $port, $client_id);
 if ($mqtt->connect(true, NULL, $username, $password)) {
 	$mqtt->publish("/ESP/LED", "PHP_HEROKU", 0);
 	$mqtt->close();
+	echo "Connected MQTT\n";
 } else {
     echo "Time out!\n";
 }
