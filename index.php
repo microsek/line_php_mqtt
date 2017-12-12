@@ -1,5 +1,5 @@
 <?php
-
+echo "MicrosekMQTT\n";
 require("phpMQTT.php");
 
 $server = "m11.cloudmqtt.com";     // change if necessary
