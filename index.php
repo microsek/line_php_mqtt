@@ -12,7 +12,7 @@ $message = "Hello CloudAMQP MQTT!";
 $mqtt = new bluerhinos\phpMQTT($host, $port, "".rand());
 
 if ($mqtt->connect(true,NULL,$username,$password)) {
-  $mqtt->publish("topic",$message, 0);
+  $mqtt->publish("/ESP/LED",$message, 0);
   $mqtt->close();
 }else{
   echo "Fail or time out";
