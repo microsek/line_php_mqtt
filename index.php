@@ -7,9 +7,9 @@ $username = "test";                   // set your username
 $password = 12345;                   // set your password
 $client_id = ""; // make sure this is unique for connecting to sever - you could use uniqid()
 
-$mqtt = new bluerhinos\phpMQTT($host, $port, "".rand());
+//$mqtt = new bluerhinos\phpMQTT($host, $port, "".rand());
 
-
+$mqtt = new bluerhinos\phpMQTT($server, $port, "".rand());
 if ($mqtt->connect(true, NULL, $username, $password)) {
 	$mqtt->publish("/ESP/LED", "PHP_HEROKU", 0);
 	$mqtt->close();
