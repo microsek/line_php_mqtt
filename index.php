@@ -9,7 +9,7 @@ $client_id = "phpMQTT-subscriber"; // make sure this is unique for connecting to
 
 $message = "Hello CloudAMQP MQTT!";
 //MQTT client id to use for the device. "" will generate a client id automatically
-$mqtt = new bluerhinos\phpMQTT($host, $port, "ClientID".rand());
+$mqtt = new bluerhinos\phpMQTT($host, $port, "".rand());
 
 if ($mqtt->connect(true,NULL,$username,$password)) {
   $mqtt->publish("topic",$message, 0);
