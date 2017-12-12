@@ -1,7 +1,7 @@
 <?php
 require("phpMQTT.php");
 /*************************/
-<?php
+
 $access_token = '1Lei/3H6LFgRRIuoZ3kOTbR+DgezqvoC05THn5/2OBE9GPxXoQrwOdQ93KoVCSQjF8YPCnql4gAV9rwktNqV9Meve9KJrkTz28UXTe5z3yBKQn4O3mKx9wp0m7iXK4jU2J47mdifAjd6JjyWzfF7BQdB04t89/1O/w1cDnyilFU=';
 // Get POST body content
 $content = file_get_contents('php://input');
@@ -136,7 +136,4 @@ $fff=[
 ];
 echo $fff[0];
 ?>
-/*************************/
 
-
-?>
