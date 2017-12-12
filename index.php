@@ -33,20 +33,24 @@ if (!is_null($events['events'])) {
 			}
 			elseif($textin_cmd[0]=='update')
 			{
-				$FIREBASE = "https://esp8266-temp.firebaseio.com/";
-				$NODE_PATCH = "Lamp.json";
-				$data = array(
-    					$textin_cmd[1] => $textin_cmd[2]
-				);
-				$json = json_encode( $data );
-				$curl = curl_init();
-				curl_setopt( $curl, CURLOPT_URL, $FIREBASE . $NODE_PATCH );
-				curl_setopt( $curl, CURLOPT_CUSTOMREQUEST, "PATCH" );
-				curl_setopt( $curl, CURLOPT_POSTFIELDS, $json );
-				curl_setopt( $curl, CURLOPT_RETURNTRANSFER, true );
-				$response = curl_exec( $curl );
-				curl_close( $curl );
-				echo $response . "\n";
+
+    				$textin_cmd[1];
+				$server = "m11.cloudmqtt.com";     // change if necessary
+				$port = 14434;                     // change if necessary
+				$username = "test";                   // set your username
+				$password = 12345;                   // set your password
+				$client_id = "Microsek"; // make sure this is unique for connecting to sever - you could use uniqid()
+
+				$mqtt = new bluerhinos\phpMQTT($server, $port, "".rand());
+
+				if ($mqtt->connect(true, NULL, $username, $password)) {
+					$mqtt->publish("/ESP/LED", $textin_cmd[1], 0);
+					$mqtt->close();
+					//echo "Finished Publish\n";
+				} else {
+    					//echo "Time out!\n";
+				}
+				//echo $response . "\n";
 				$messages = [
 					'type' => 'text',
 					'text' => "เรียบร้อยแล้วครับเจ้านาย"
@@ -66,9 +70,9 @@ if (!is_null($events['events'])) {
 				if ($mqtt->connect(true, NULL, $username, $password)) {
 					$mqtt->publish("/ESP/LED", "PHP_HEROKU_LINE", 0);
 					$mqtt->close();
-					echo "Finished Publish\n";
+					//echo "Finished Publish\n";
 				} else {
-    					echo "Time out!\n";
+    					//echo "Time out!\n";
 				}
 				//echo $response . "\n";
 				$messages = [
