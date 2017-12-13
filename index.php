@@ -1,4 +1,6 @@
 <?php
+$access_token = '1Lei/3H6LFgRRIuoZ3kOTbR+DgezqvoC05THn5/2OBE9GPxXoQrwOdQ93KoVCSQjF8YPCnql4gAV9rwktNqV9Meve9KJrkTz28UXTe5z3yBKQn4O3mKx9wp0m7iXK4jU2J47mdifAjd6JjyWzfF7BQdB04t89/1O/w1cDnyilFU=';
+
 require("phpMQTT.php");
 
 $server = "m11.cloudmqtt.com";     // change if necessary
@@ -6,10 +8,6 @@ $port = 14434;                     // change if necessary
 $username = "test";                   // set your username
 $password = 12345;                   // set your password
 $client_id = "Microsek"; // make sure this is unique for connecting to sever - you could use uniqid()
-
-/*************************/
-
-$access_token = '1Lei/3H6LFgRRIuoZ3kOTbR+DgezqvoC05THn5/2OBE9GPxXoQrwOdQ93KoVCSQjF8YPCnql4gAV9rwktNqV9Meve9KJrkTz28UXTe5z3yBKQn4O3mKx9wp0m7iXK4jU2J47mdifAjd6JjyWzfF7BQdB04t89/1O/w1cDnyilFU=';
 // Get POST body content
 $content = file_get_contents('php://input');
 // Parse JSON
@@ -36,12 +34,11 @@ if (!is_null($events['events'])) {
                  'type'=> 'sticker',
                  'packageId'=> "2",
                  'stickerId'=> "1"              
-                ];  
+                    ];  
             }
             elseif($textin_cmd[0]=='update')
             {
-
-                $textin_cmd[1];
+                 $textin_cmd[1];
 
                 $mqtt = new bluerhinos\phpMQTT($server, $port, "".rand());
 
@@ -63,28 +60,54 @@ if (!is_null($events['events'])) {
             
             elseif($textin_cmd[0]=='สถานะ')
             {
-                $mqtt = new bluerhinos\phpMQTT($server, $port, "".rand());
-
-                if(!$mqtt->connect(true,NULL,$username,$password)){
-                    exit(1);
-                }
-
-                //currently subscribed topics
-                $topics['/microsek/esp'] = array("qos"=>0, "function"=>"procmsg");
-                $mqtt->subscribe($topics,0);
-
-                while($mqtt->proc()){
-                }
-
-                $mqtt->close();
-                function procmsg($topic,$msg){
-                    $messages = [
+                $FIREBASE = "https://esp8266-temp.firebaseio.com/";
+                $NODE_GET = "Lamp.json";
+                $curl = curl_init();
+                curl_setopt( $curl, CURLOPT_URL, $FIREBASE . $NODE_GET );
+                curl_setopt( $curl, CURLOPT_RETURNTRANSFER, true );
+                $response = curl_exec( $curl );
+                curl_close( $curl );
+                //echo $response . "\n";
+                $messages = [
                     'type' => 'text',
-                    'text' => $msg
-                    ];
-                }
+                    'text' => $response
+                ];
+
+            }
+            else
+            {
                 
-                 
+                $messages = 
+                [
+                 //'type'=> 'sticker',
+                 //'packageId'=> "2",
+                 //'stickerId'=> "149"  
+                //******************
+                    //{
+                    //'type'=> "template",
+                    //'altText'=> "this is a confirm template",
+                    //'template'=> {
+                        'type'=> 'confirm',
+                        'text'=> "Are you sure?",
+                        //'actions'=> [
+                        //{
+                            //  'type'=> "message",
+                            //  'label'=> "Yes",
+                            //  'text'=> "yes"
+                        //},
+                        //{
+                            //  'type'=> "message",
+                            //  'label'=> "No",
+                            //  'text'=> "no"
+                        //}
+                        //]
+                    //}
+                    //}         
+                //********************
+                    ];  
+
+            }
+            
             
             
             $url = 'https://api.line.me/v2/bot/message/reply';
