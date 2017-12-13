@@ -44,7 +44,7 @@ if (!is_null($events['events'])) {
 				$mqtt = new bluerhinos\phpMQTT($server, $port, "".rand());
 
 				if ($mqtt->connect(true, NULL, $username, $password)) {
-					$mqtt->publish("/ESP/LED", $textin_cmd[1], 0);
+					$mqtt->publish("/microsek", $textin_cmd[1], 0);
 					$mqtt->close();
 					//echo "Finished Publish\n";
 				} else {
