@@ -1,5 +1,13 @@
 <?php
 require("phpMQTT.php");
+
+$textin_cmd[1];
+$server = "m11.cloudmqtt.com";     // change if necessary
+$port = 14434;                     // change if necessary
+$username = "test";                   // set your username
+$password = 12345;                   // set your password
+$client_id = "Microsek"; // make sure this is unique for connecting to sever - you could use uniqid()
+
 /*************************/
 
 $access_token = '1Lei/3H6LFgRRIuoZ3kOTbR+DgezqvoC05THn5/2OBE9GPxXoQrwOdQ93KoVCSQjF8YPCnql4gAV9rwktNqV9Meve9KJrkTz28UXTe5z3yBKQn4O3mKx9wp0m7iXK4jU2J47mdifAjd6JjyWzfF7BQdB04t89/1O/w1cDnyilFU=';
@@ -34,19 +42,12 @@ if (!is_null($events['events'])) {
 			elseif($textin_cmd[0]=='update')
 			{
 
-    				$textin_cmd[1];
-				$server = "m11.cloudmqtt.com";     // change if necessary
-				$port = 14434;                     // change if necessary
-				$username = "test";                   // set your username
-				$password = 12345;                   // set your password
-				$client_id = "Microsek"; // make sure this is unique for connecting to sever - you could use uniqid()
-
+    	
 				$mqtt = new bluerhinos\phpMQTT($server, $port, "".rand());
 
 				if ($mqtt->connect(true, NULL, $username, $password)) {
 					$mqtt->publish("/microsek/esp", $textin_cmd[1], 0);
 					$mqtt->close();
-					//echo "Finished Publish\n";
 				} else {
     					//echo "Time out!\n";
 				}
@@ -59,33 +60,27 @@ if (!is_null($events['events'])) {
 			
 			elseif($textin_cmd[0]=='สถานะ')
 			{
-				require("../phpMQTT.php");
-				$server = "m11.cloudmqtt.com";     // change if necessary
-				$port = 14434;                     // change if necessary
-				$username = "test";                   // set your username
-				$password = 12345;                   // set your password
-				$client_id = "Microsek"; // make sure this is unique for connecting to sever - you could use uniqid()
-				$mqtt = new phpMQTT($server, $port, $client_id);
-				if(!$mqtt->connect(true, NULL, $username, $password)) {
-					exit(1);
+				$mqtt = new bluerhinos\phpMQTT($server, $port, "".rand());
+
+				if(!$mqtt->connect(true,NULL,$username,$password)){
+  					exit(1);
 				}
-				$topics['/ESP/LED'] = array("qos" => 0, "function" => "procmsg");
-				$mqtt->subscribe($topics, 0);
+
+				//currently subscribed topics
+				$topics['topic'] = array("qos"=>0, "function"=>"procmsg");
+				$mqtt->subscribe($topics,0);
+
 				while($mqtt->proc()){
-		
 				}
+
 				$mqtt->close();
-				function procmsg($topic, $msg){
-					echo "Msg Recieved: " . date("r") . "\n";
-					echo "Topic: {$topic}\n\n";
-					echo "\t$msg\n\n";
-				}
-				//echo $response . "\n";
-				$messages = [
+				function procmsg($topic,$msg){
+  					$messages = [
 					'type' => 'text',
-					'text' => $response
+					'text' => $msg
 				];
-			}
+				}
+				
 			else
 			{
 				
