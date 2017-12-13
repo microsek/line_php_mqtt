@@ -1,8 +1,12 @@
 <?php
 
 require("phpMQTT.php");
-require("config.php");
-$mqtt = new bluerhinos\phpMQTT($host, $port, "ClientID".rand());
+$server = "m11.cloudmqtt.com";     // change if necessary
+$port = 14434;                     // change if necessary
+$username = "test";                   // set your username
+$password = 12345;                   // set your password
+$client_id = "Microsek";
+$mqtt = new bluerhinos\phpMQTT($server, $port, "ClientID".rand());
 
 if(!$mqtt->connect(true,NULL,$username,$password)){
   exit(1);
