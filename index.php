@@ -60,18 +60,25 @@ if (!is_null($events['events'])) {
             
             elseif($textin_cmd[0]=='สถานะ')
             {
-                $FIREBASE = "https://esp8266-temp.firebaseio.com/";
-                $NODE_GET = "Lamp.json";
-                $curl = curl_init();
-                curl_setopt( $curl, CURLOPT_URL, $FIREBASE . $NODE_GET );
-                curl_setopt( $curl, CURLOPT_RETURNTRANSFER, true );
-                $response = curl_exec( $curl );
-                curl_close( $curl );
-                //echo $response . "\n";
-                $messages = [
+                $mqtt = new bluerhinos\phpMQTT($server, $port, "".rand());
+
+                if(!$mqtt->connect(true,NULL,$username,$password)){
+                    exit(1);
+                }
+
+                //currently subscribed topics
+                $topics['/microsek/esp'] = array("qos"=>0, "function"=>"procmsg");
+                $mqtt->subscribe($topics,0);
+
+                while($mqtt->proc()){
+                }
+
+                $mqtt->close();
+                function procmsg($topic,$msg){
+                    $messages = [
                     'type' => 'text',
-                    'text' => $response
-                ];
+                    'text' => $msg
+                    ];
 
             }
             else
