@@ -1,7 +1,6 @@
 <?php
 require("phpMQTT.php");
 
-$textin_cmd[1];
 $server = "m11.cloudmqtt.com";     // change if necessary
 $port = 14434;                     // change if necessary
 $username = "test";                   // set your username
@@ -42,7 +41,7 @@ if (!is_null($events['events'])) {
 			elseif($textin_cmd[0]=='update')
 			{
 
-    	
+    				$textin_cmd[1];
 				$mqtt = new bluerhinos\phpMQTT($server, $port, "".rand());
 
 				if ($mqtt->connect(true, NULL, $username, $password)) {
@@ -67,7 +66,7 @@ if (!is_null($events['events'])) {
 				}
 
 				//currently subscribed topics
-				$topics['topic'] = array("qos"=>0, "function"=>"procmsg");
+				$topics['/microsek/esp'] = array("qos"=>0, "function"=>"procmsg");
 				$mqtt->subscribe($topics,0);
 
 				while($mqtt->proc()){
